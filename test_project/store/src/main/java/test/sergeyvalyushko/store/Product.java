@@ -1,20 +1,16 @@
 package test.sergeyvalyushko.store;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class Product {
     private String name;
-    private Double price;
-    private Date made_date;
-    public Product(String name, Double price, Date made_date){
+    private Integer price;
+    private Date date;
+    public Product(String name, Integer price, Date date){
         this.name = name;
         this.price = price;
-        this.made_date = made_date;
+        this.date = date;
     }
-    public String getName (){ return this.name; }
-    public Double getPrice (){
-        return this.price;
-    }
-    public Date getDate (){ return this.made_date; }
-
 }

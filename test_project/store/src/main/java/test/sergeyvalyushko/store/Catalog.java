@@ -1,7 +1,7 @@
 package test.sergeyvalyushko.store;
 
 import org.xml.sax.SAXException;
-import test.sergeyvalyushko.common.ReflectionUser;
+import test.sergeyvalyushko.common.Reflection;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.Collections;
@@ -11,32 +11,33 @@ import java.util.List;
 public class Catalog {
 
     String location = "test.sergeyvalyushko.store";
-    ReflectionUser<Category> reflection = new ReflectionUser<Category>();
+    Reflection<Category> reflection = new Reflection<Category>();
+    RandomStorePopulator populator = new RandomStorePopulator();
+    List<Category> instances = reflection.createClassesInstances(Category.class, location);
 
-    protected void displayCatalog() {
-        for (Category category : reflection.createClassesInstances(Category.class, location)) {
+    protected void displayCatalog(String pparam, String param) throws ParserConfigurationException, SAXException, IOException {
+        for (Category category : instances) {
             System.out.println(category.getName() + ":");
-            for (Product prod : category.addProduct()) {
-                System.out.println(prod.getName() + " - price: " + prod.getPrice() + ", made_date: " + prod.getDate());
-            }
-        }
-    }
-
-    protected void displaySortedCatalog(String param) throws ParserConfigurationException, SAXException, IOException {
-        for (Category category : reflection.createClassesInstances(Category.class, location)) {
-            System.out.println(category.getName() + ":");
-            for (Product prod : this.sortCatalog(category.addProduct(), param)) {
-                System.out.println(prod.getName() + " - price: " + prod.getPrice() + ", made_date: " + prod.getDate());
-            }
-        }
-    }
-
-    protected void displayTop() throws ParserConfigurationException, SAXException, IOException {
-        for (Category category : reflection.createClassesInstances(Category.class, location)) {
-            System.out.println(category.getName() + ":");
-            List<Product> list = this.sortCatalog(category.addProduct(), "price");
-            for (int i = 0; i < 3; i++) {
-                System.out.println(list.get(i).getName() + " - price: " + list.get(i).getPrice() + ", made_date: " + list.get(i).getDate());
+            switch (pparam) {
+                case ("cat"): {
+                    for (Product product : category.addProduct(populator)) {
+                        System.out.println(product.getName() + " - price: " + product.getPrice() + ", made_date: " + product.getDate());
+                    }
+                    break;
+                }
+                case ("sorted"): {
+                    for (Product product : this.sortCatalog(category.productListSorted, param)) {
+                        System.out.println(product.getName() + " - price: " + product.getPrice() + ", made_date: " + product.getDate());
+                    }
+                    break;
+                }
+                case ("top"): {
+                    List<Product> list = this.sortCatalog(category.productListSorted, "price");
+                    for (int i = 0; i < 3; i++) {
+                        System.out.println(list.get(i).getName() + " - price: " + list.get(i).getPrice() + ", made_date: " + list.get(i).getDate());
+                    }
+                    break;
+                }
             }
         }
     }
