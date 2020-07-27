@@ -1,4 +1,4 @@
-package test.sergeyvalyushko.store;
+package test.sergeyvalyushko.store.helpers;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

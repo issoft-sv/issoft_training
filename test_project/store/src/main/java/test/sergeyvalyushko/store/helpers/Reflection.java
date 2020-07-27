@@ -1,6 +1,7 @@
-package test.sergeyvalyushko.common;
+package test.sergeyvalyushko.store.helpers;
 
 import org.reflections.Reflections;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -24,4 +25,5 @@ public class Reflection<T> {
         }
         return listOfInstances;
     }
+    public abstract <T> createCategory();
 }
