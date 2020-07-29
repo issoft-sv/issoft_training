@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-        Catalog catalog = Catalog.getInstance();
-        catalog.displayCatalog("init", "");
+        Catalog catalog = new Catalog();
+        catalog.displayCatalog("cat", "");
         System.out.println("To sort products by 'name' or 'price' enter parameter name");
         System.out.println("To display top 3 products in every category enter 'top'");
         System.out.println("To finish enter 'exit'");
