@@ -2,47 +2,45 @@ package test.sergeyvalyushko.store;
 
 import org.xml.sax.SAXException;
 import test.sergeyvalyushko.common.Reflection;
+import test.sergeyvalyushko.store.helpers.RandomStorePopulator;
+import test.sergeyvalyushko.store.helpers.SaxExample;
+
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class Catalog {
 
-    String location = "test.sergeyvalyushko.store";
-    Reflection<Category> reflection = new Reflection<Category>();
-    RandomStorePopulator populator = new RandomStorePopulator();
-    List<Category> instances = reflection.createClassesInstances(Category.class, location);
+    private RandomStorePopulator populator;
+    private List<Category> categories;
+    private static Catalog instance;
 
-    protected void displayCatalog(String pparam, String param) throws ParserConfigurationException, SAXException, IOException {
-        for (Category category : instances) {
-            System.out.println(category.getName() + ":");
-            switch (pparam) {
-                case ("cat"): {
-                    for (Product product : category.addProduct(populator)) {
-                        System.out.println(product.getName() + " - price: " + product.getPrice() + ", made_date: " + product.getDate());
-                    }
-                    break;
-                }
-                case ("sorted"): {
-                    for (Product product : this.sortCatalog(category.productListSorted, param)) {
-                        System.out.println(product.getName() + " - price: " + product.getPrice() + ", made_date: " + product.getDate());
-                    }
-                    break;
-                }
-                case ("top"): {
-                    List<Product> list = this.sortCatalog(category.productListSorted, "price");
-                    for (int i = 0; i < 3; i++) {
-                        System.out.println(list.get(i).getName() + " - price: " + list.get(i).getPrice() + ", made_date: " + list.get(i).getDate());
-                    }
-                    break;
-                }
-            }
-        }
+    private Catalog() {
+        String location = "test.sergeyvalyushko.store";
+        Reflection<Category> reflection = new Reflection<Category>();
+        populator = new RandomStorePopulator();
+        categories = reflection.createClassesInstances(Category.class, location);
     }
 
-    protected List<Product> sortCatalog(List<Product> prodList, String param) throws ParserConfigurationException, SAXException, IOException {
+    public RandomStorePopulator getPopulator() {
+        return populator;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public static Catalog getInstance() {
+        if (instance == null) {
+            instance = new Catalog();
+        }
+        return instance;
+    }
+
+    public List<Product> sortCatalog(List<Product> prodList, String param) throws ParserConfigurationException, SAXException, IOException {
         SaxExample sax = new SaxExample();
         String a = sax.config().get(param);
         if (a.equals("asc")) {

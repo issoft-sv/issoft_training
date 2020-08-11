@@ -1,6 +1,7 @@
-package test.sergeyvalyushko.store;
+package test.sergeyvalyushko.store.helpers;
 
 import com.github.javafaker.Faker;
+import test.sergeyvalyushko.store.Product;
 
 import java.util.Date;
 import java.util.List;
