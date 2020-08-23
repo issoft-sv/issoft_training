@@ -14,6 +14,6 @@ public class ExitApp extends AbstractHandler{
         if (input.equals("exit")){
             System.exit(0);
         }
-        else System.out.println("Incorrect input");
+        else super.handleRequest(input, catalog);
     }
 }

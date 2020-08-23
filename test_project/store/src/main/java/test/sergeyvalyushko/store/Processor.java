@@ -14,7 +14,5 @@ public class Processor {
         AbstractHandler displayCatalog = new DisplayCatalog(sortCatalog);
 
         displayCatalog.handleRequest(input, catalog);
-
-
     }
 }

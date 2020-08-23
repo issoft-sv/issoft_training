@@ -1,13 +1,10 @@
 package test.sergeyvalyushko.store;
 
-import org.xml.sax.SAXException;
 import test.sergeyvalyushko.common.Reflection;
 import test.sergeyvalyushko.store.helpers.RandomStorePopulator;
-import test.sergeyvalyushko.store.helpers.SaxExample;
+import test.sergeyvalyushko.store.helpers.XmlParser;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -40,9 +37,9 @@ public class Catalog {
         return instance;
     }
 
-    public List<Product> sortCatalog(List<Product> prodList, String param) throws ParserConfigurationException, SAXException, IOException {
-        SaxExample sax = new SaxExample();
-        String a = sax.config().get(param);
+    public List<Product> sortCatalog(List<Product> prodList, String param) throws IOException {
+        XmlParser parser = new XmlParser();
+        String a = parser.parseFromXml(param);
         if (a.equals("asc")) {
             if (param.equals("name")) {
                 Collections.sort(prodList, Comparator.comparing(obj -> obj.getName()));

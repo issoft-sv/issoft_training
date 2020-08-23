@@ -15,6 +15,6 @@ public class AbstractHandler {
     public void handleRequest(String input, Catalog catalog) throws ParserConfigurationException, SAXException, IOException {
         if (nextHandler != null) {
             nextHandler.handleRequest(input, catalog);
-        }
+        } else System.out.println("Incorrect input");
     }
 }
