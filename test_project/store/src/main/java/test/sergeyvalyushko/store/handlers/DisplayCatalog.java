@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class DisplayCatalog extends AbstractHandler {
+
     public DisplayCatalog(AbstractHandler nextHandler) {
         super(nextHandler);
     }
@@ -20,8 +21,7 @@ public class DisplayCatalog extends AbstractHandler {
     }
 
     @Override
-    protected List<Product> prepareList(List<Product> list, String param) {
-        List<Product> listOutput = list;
-        return listOutput;
+    protected List<Product> prepareCatalog(List<Product> list, String param) {
+        return list;
     }
 }
