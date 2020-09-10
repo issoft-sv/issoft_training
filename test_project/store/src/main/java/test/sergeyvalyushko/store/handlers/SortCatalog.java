@@ -1,31 +1,16 @@
 package test.sergeyvalyushko.store.handlers;
 
-import org.xml.sax.SAXException;
-import test.sergeyvalyushko.store.Catalog;
 import test.sergeyvalyushko.store.Product;
 import test.sergeyvalyushko.store.helpers.XmlParser;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class SortCatalog extends AbstractHandler {
-    protected List<String> sortParameters = new ArrayList<>();
+public class SortCatalog extends DisplayCatalog {
 
     public SortCatalog(AbstractHandler nextHandler) {
         super(nextHandler);
-        sortParameters.add("name");
-        sortParameters.add("price");
-    }
-
-
-    @Override
-    public void handleRequest(String input, Catalog catalog) throws ParserConfigurationException, SAXException, IOException {
-        if (sortParameters.contains(input))displayCatalog(input, catalog);
-        else super.handleRequest(input, catalog);
+        handledInput = Arrays.asList("name", "price");
     }
 
     @Override
