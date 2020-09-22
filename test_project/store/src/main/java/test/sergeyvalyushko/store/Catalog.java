@@ -25,13 +25,20 @@ public class Catalog {
         }
     }
 
+    private Catalog(String fromDb) {
+        DBhandler db = new DBhandler();
+        categories = db.createCatalog();
+    }
+
     public List<Category> getCategories() {
         return categories;
     }
 
-    public static Catalog getInstance() {
+    public static Catalog getInstance(String catalogSource) {
         if (instance == null) {
-            instance = new Catalog();
+            if (catalogSource.equals("fromDb")) {
+                instance = new Catalog("fromDb");
+            } else instance = new Catalog();
         }
         return instance;
     }

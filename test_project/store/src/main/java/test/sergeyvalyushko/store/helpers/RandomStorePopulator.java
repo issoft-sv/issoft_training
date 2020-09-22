@@ -3,6 +3,8 @@ package test.sergeyvalyushko.store.helpers;
 import com.github.javafaker.Faker;
 import test.sergeyvalyushko.store.Product;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 
@@ -23,5 +25,25 @@ public class RandomStorePopulator {
             }
         }
         return productList;
+    }
+    public void createDbData (String categoryName, Connection conn){
+        try {
+            Statement st = conn.createStatement();
+            String sql = "";
+            for (int i = 0; i < 5; i++) {
+                switch (categoryName) {
+                    case ("Book"):
+                        sql = String.format("INSERT INTO PRODUCTS (name, category_name, price) " + "VALUES ('%s', '%s', %d)", faker.book().publisher(), categoryName, (int) ((Math.random() * 10) + 1));
+                        break;
+                    case ("Beer"):
+                        sql = String.format("INSERT INTO PRODUCTS (name, category_name, price) " + "VALUES ('%s', '%s', %d)", faker.beer().name(), categoryName, (int) ((Math.random() * 10) + 1));
+                        break;
+                    case ("Food"):
+                        sql = String.format("INSERT INTO PRODUCTS (name, category_name, price) " + "VALUES ('%s', '%s', %d)", faker.food().ingredient(), categoryName, (int) ((Math.random() * 10) + 1));
+                        break;
+                }
+                st.executeUpdate(sql);
+            }
+        } catch (Exception e) {e.printStackTrace();}
     }
 }
