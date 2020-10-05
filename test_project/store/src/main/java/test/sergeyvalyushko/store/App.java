@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
         Processor processor = new Processor();
-        Catalog catalog = Catalog.getInstance("fromDb");
+        Catalog catalog = Catalog.getInstance();
         System.out.println("To display original catalog enter 'show'");
         System.out.println("To sort products by 'name' or 'price' enter parameter name");
         System.out.println("To display top 3 products in every category enter 'top'");

@@ -1,49 +1,40 @@
 package test.sergeyvalyushko.store.helpers;
 
 import com.github.javafaker.Faker;
+import test.sergeyvalyushko.common.Reflection;
+import test.sergeyvalyushko.store.Category;
 import test.sergeyvalyushko.store.Product;
 
-import java.sql.Connection;
-import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 
 public class RandomStorePopulator {
     private Faker faker = new Faker();
-    public List<Product> createData(String categoryName, List<Product> productList) {
+    private List<Product> createData(String categoryName, List<Product> productList) {
+        String productName = "";
         for (int i = 0; i < 5; i++) {
             switch (categoryName) {
                 case ("Book"):
-                    productList.add(new Product(faker.book().title(), (int) ((Math.random() * 10) + 1), faker.date().between(new Date(1212121212222L), new Date())));
+                    productName = faker.book().title();
                     break;
                 case ("Beer"):
-                    productList.add(new Product(faker.beer().name(), (int) ((Math.random() * 10) + 1), faker.date().between(new Date(1212121212222L), new Date())));
+                    productName = faker.beer().name();
                     break;
                 case ("Food"):
-                    productList.add(new Product(faker.food().ingredient(), (int) ((Math.random() * 10) + 1), faker.date().between(new Date(1212121212222L), new Date())));
+                    productName = faker.food().ingredient();
                     break;
             }
+            productList.add(new Product(productName, (int) ((Math.random() * 10) + 1), faker.date().between(new Date(1212121212222L), new Date())));
         }
         return productList;
     }
-    public void createDbData (String categoryName, Connection conn){
-        try {
-            Statement st = conn.createStatement();
-            String sql = "";
-            for (int i = 0; i < 5; i++) {
-                switch (categoryName) {
-                    case ("Book"):
-                        sql = String.format("INSERT INTO PRODUCTS (name, category_name, price) " + "VALUES ('%s', '%s', %d)", faker.book().publisher(), categoryName, (int) ((Math.random() * 10) + 1));
-                        break;
-                    case ("Beer"):
-                        sql = String.format("INSERT INTO PRODUCTS (name, category_name, price) " + "VALUES ('%s', '%s', %d)", faker.beer().name(), categoryName, (int) ((Math.random() * 10) + 1));
-                        break;
-                    case ("Food"):
-                        sql = String.format("INSERT INTO PRODUCTS (name, category_name, price) " + "VALUES ('%s', '%s', %d)", faker.food().ingredient(), categoryName, (int) ((Math.random() * 10) + 1));
-                        break;
-                }
-                st.executeUpdate(sql);
-            }
-        } catch (Exception e) {e.printStackTrace();}
+    public List<Category> populateCatalog(){
+        List<Category> categories;
+        String location = "test.sergeyvalyushko.store";
+        Reflection<Category> reflection = new Reflection<Category>();
+        categories = reflection.createClassesInstances(Category.class, location);
+        for (Category category : categories) {
+            this.createData(category.getName(), category.getProductList());
+        } return categories;
     }
 }
