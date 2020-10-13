@@ -15,7 +15,7 @@ public class Catalog {
 
     private Catalog() {
         CatalogPopulator cp = new CatalogPopulator();
-        categories = cp.populateCatalog("db");
+        categories = cp.populateCatalog("http_server");
     }
 
     public List<Category> getCategories() {

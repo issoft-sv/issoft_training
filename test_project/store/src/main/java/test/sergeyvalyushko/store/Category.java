@@ -3,7 +3,7 @@ package test.sergeyvalyushko.store;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Category {
+public class Category {
     protected String name;
     protected List<Product> productList = new ArrayList<Product>();
 

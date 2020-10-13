@@ -1,6 +1,7 @@
 package test.sergeyvalyushko.store;
 
 import test.sergeyvalyushko.store.helpers.RandomStorePopulator;
+import test.sergeyvalyushko.store.http.HttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,10 @@ public class CatalogPopulator {
             case ("faker"):
                 RandomStorePopulator rsp = new RandomStorePopulator();
                 categories = rsp.populateCatalog();
+                break;
+            case ("http_server"):
+                HttpClient client = new HttpClient();
+                categories = client.httpRequest();
                 break;
         } return categories;
     }

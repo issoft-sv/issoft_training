@@ -1,6 +1,7 @@
 package test.sergeyvalyushko.store;
 
 import org.xml.sax.SAXException;
+import test.sergeyvalyushko.store.http.LocalHttpServer;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -8,6 +9,8 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+        LocalHttpServer ls = new LocalHttpServer();
+        ls.startServer();
         Processor processor = new Processor();
         Catalog catalog = Catalog.getInstance();
         System.out.println("To display original catalog enter 'show'");
