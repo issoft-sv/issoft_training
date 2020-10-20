@@ -10,21 +10,23 @@ import java.util.List;
 
 public class RandomStorePopulator {
     private Faker faker = new Faker();
-    private List<Product> createData(String categoryName, List<Product> productList) {
+    public String createProductName (String categoryName){
         String productName = "";
+        switch (categoryName) {
+            case ("Book"):
+                productName = faker.book().publisher();
+                break;
+            case ("Beer"):
+                productName = faker.beer().name();
+                break;
+            case ("Food"):
+                productName = faker.food().ingredient();
+                break;
+        } return productName;
+    }
+    private List<Product> createData(String categoryName, List<Product> productList) {
         for (int i = 0; i < 5; i++) {
-            switch (categoryName) {
-                case ("Book"):
-                    productName = faker.book().title();
-                    break;
-                case ("Beer"):
-                    productName = faker.beer().name();
-                    break;
-                case ("Food"):
-                    productName = faker.food().ingredient();
-                    break;
-            }
-            productList.add(new Product(productName, (int) ((Math.random() * 10) + 1), faker.date().between(new Date(1212121212222L), new Date())));
+            productList.add(new Product(createProductName(categoryName), (int) ((Math.random() * 10) + 1), faker.date().between(new Date(1212121212222L), new Date())));
         }
         return productList;
     }

@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import test.sergeyvalyushko.store.category.Beer;
 import test.sergeyvalyushko.store.category.Book;
 import test.sergeyvalyushko.store.category.Food;
+import test.sergeyvalyushko.store.helpers.RandomStorePopulator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -78,21 +79,9 @@ public class DBhandler {
         closeConnection(conn, st);
     }
     private void createDbData (String categoryName){
-        Faker faker = new Faker();
+        RandomStorePopulator rsp = new RandomStorePopulator();
         for (int i = 0; i < 5; i++) {
-            String productname = "";
-            switch (categoryName) {
-                case ("Book"):
-                    productname = faker.book().publisher();
-                    break;
-                case ("Beer"):
-                    productname = faker.beer().name();
-                    break;
-                case ("Food"):
-                    productname = faker.food().ingredient();
-                    break;
-            }
-            sql = String.format("INSERT INTO PRODUCTS (name, category_name, price) " + "VALUES ('%s', '%s', %d)", productname, categoryName, (int) ((Math.random() * 10) + 1));
+            sql = String.format("INSERT INTO PRODUCTS (name, category_name, price) " + "VALUES ('%s', '%s', %d)", rsp.createProductName(categoryName), categoryName, (int) ((Math.random() * 10) + 1));
             execUpdate(sql);
         }
         closeConnection(conn, st);
