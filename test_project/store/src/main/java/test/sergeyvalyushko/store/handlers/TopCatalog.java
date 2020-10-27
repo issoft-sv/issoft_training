@@ -10,8 +10,7 @@ public class TopCatalog extends SortCatalog {
 
     public TopCatalog(AbstractHandler nextHandler) {
         super(nextHandler);
-        List<String> sortParametersTop = Arrays.asList("top");
-        sortParameters = sortParametersTop;
+        handledInput = Arrays.asList("top");
     }
 
     @Override

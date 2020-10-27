@@ -10,4 +10,8 @@ public class Product {
     private String name;
     private Integer price;
     private Date date;
+    public Product (){
+        super();
+    }
 }
+

@@ -12,7 +12,9 @@ public class Processor {
         AbstractHandler topCatalog = new TopCatalog(exitApp);
         AbstractHandler sortCatalog = new SortCatalog(topCatalog);
         AbstractHandler displayCatalog = new DisplayCatalog(sortCatalog);
+        AbstractHandler selectCategory = new SelectCategory(displayCatalog);
+        AbstractHandler selectProduct = new SelectProduct(selectCategory);
 
-        displayCatalog.handleRequest(input, catalog);
+        selectProduct.handleRequest(input, catalog);
     }
 }
